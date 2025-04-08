@@ -128,7 +128,80 @@ export function LoginForm() {
 
   return (
     <Card className="w-full">
-      {/* Log in FOrm */}
+      <CardHeader>
+        <CardTitle className="text-2xl">Sign In</CardTitle>
+        <CardDescription>Sign in to your account to access your dashboard</CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        {error && (
+          <Alert variant="destructive">
+            <AlertDescription>{error}</AlertDescription>
+          </Alert>
+        )}
+
+        <form onSubmit={handleEmailLogin} className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="email">Email</Label>
+            <Input
+              id="email"
+              type="email"
+              placeholder="you@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <Label htmlFor="password">Password</Label>
+              <Link href="/reset-password" className="text-sm text-primary hover:underline">
+                Forgot password?
+              </Link>
+            </div>
+            <Input
+              id="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <Button type="submit" className="w-full" disabled={loading}>
+            {loading ? "Signing in..." : "Sign In with Email"}
+          </Button>
+        </form>
+
+        <div className="flex items-center gap-2 my-4">
+          <Separator className="flex-1" />
+          <span className="text-xs text-muted-foreground">OR</span>
+          <Separator className="flex-1" />
+        </div>
+
+        <div className="space-y-2">
+          <Button variant="outline" className="w-full" onClick={handleMagicLinkLogin} disabled={loading} type="button">
+            <Mail className="mr-2 h-4 w-4" />
+            Sign In with Magic Link
+          </Button>
+
+          <Button variant="outline" className="w-full" onClick={handleGithubLogin} disabled={loading} type="button">
+            <Github className="mr-2 h-4 w-4" />
+            Sign In with GitHub
+          </Button>
+
+          <Button variant="outline" className="w-full" onClick={handleGoogleLogin} disabled={loading} type="button">
+            <LucideGoogle className="mr-2 h-4 w-4" />
+            Sign In with Google
+          </Button>
+        </div>
+      </CardContent>
+      <CardFooter className="flex justify-center">
+        <p className="text-sm text-muted-foreground">
+          Don&apos;t have an account?{" "}
+          <Link href="/signup" className="text-primary hover:underline">
+            Sign up
+          </Link>
+        </p>
+      </CardFooter>
     </Card>
   )
 }
